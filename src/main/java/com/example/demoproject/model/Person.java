@@ -13,7 +13,7 @@ public class Person {
 	private final StringProperty city;
 	private final ObjectProperty<LocalDate> birthday;
 	/**
-	 * Конструктор по умолчанию.
+	 * Конструктор без параметров.
 	 */
 	public Person() {
 		this(null, null);

@@ -5,6 +5,8 @@ import com.example.demoproject.model.Person;
 import com.example.demoproject.util.DateUtil;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -84,8 +86,6 @@ public class PersonOverviewController {
 			streetLabel.setText(person.getStreet());
 			postalCodeLabel.setText(Integer.toString(person.getPostalCode()));
 			cityLabel.setText(person.getCity());
-			
-			
 			birthdayLabel.setText(DateUtil.format(person.getBirthday()));
 			
 		} else {
@@ -96,6 +96,58 @@ public class PersonOverviewController {
 			postalCodeLabel.setText("");
 			cityLabel.setText("");
 			birthdayLabel.setText("");
+		}
+	}
+	/**
+	 * Вызывается, когда пользователь кликает по кнопке удаления.
+	 */
+	@FXML
+	private void handleDeletePerson() {
+		int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			personTable.getItems().remove(selectedIndex);
+		} else {
+			// Ничего не выбрано.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Не выбрано поле");
+			alert.setHeaderText("Никто не выбран");
+			alert.setContentText("Пожалуйста, выберите человека в таблице.");
+			alert.showAndWait();
+		}
+	}
+	/**
+	 * Вызывается, когда пользователь кликает по кнопке New...
+	 * Открывает диалоговое окно с дополнительной информацией нового адресата.
+	 */
+	@FXML
+	private void handleNewPerson() {
+		Person tempPerson = new Person();
+		boolean okClicked = mainApp.showPersonEditDialog(tempPerson);
+		if (okClicked) {
+			mainApp.getPersonData().add(tempPerson);
+		}
+	}
+	/**
+	 * Вызывается, когда пользователь кликает по кнопка Edit...
+	 * Открывает диалоговое окно для изменения выбранного адресата.
+	 */
+	@FXML
+	private void handleEditPerson() {
+		Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+		if (selectedPerson != null) {
+			boolean okClicked = mainApp.showPersonEditDialog(selectedPerson);
+			if (okClicked) {
+				showPersonDetails(selectedPerson);
+			}
+		} else {
+			// Ничего не выбрано.
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Ничего не выбрано");
+			alert.setHeaderText("Человек не выбран");
+			alert.setContentText("Пожалуйста выберите человека в таблице");
+			alert.showAndWait();
 		}
 	}
 }
