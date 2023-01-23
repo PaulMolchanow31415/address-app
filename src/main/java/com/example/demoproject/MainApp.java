@@ -19,13 +19,9 @@ public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	/**
-	 * Данные, в виде наблюдаемого списка адресатов.
-	 */
+
 	private ObservableList<Person> personData = FXCollections.observableArrayList();
-	/**
-	 * Конструктор
-	 */
+
 	public MainApp() {
 		// В качестве образца добавляем некоторые данные
 		personData.add(new Person("Владислав","Бас"));
