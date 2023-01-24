@@ -1,6 +1,7 @@
 package com.example.demoproject;
 import com.example.demoproject.controller.PersonEditDialogController;
 import com.example.demoproject.controller.PersonOverviewController;
+import com.example.demoproject.controller.RootLayoutController;
 import com.example.demoproject.model.Person;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -24,11 +25,11 @@ public class MainApp extends Application {
 
 	public MainApp() {
 		// В качестве образца добавляем некоторые данные
-		personData.add(new Person("Владислав","Бас"));
-		personData.add(new Person("Евгений","Березуев"));
-		personData.add(new Person("Илья","Мамонов"));
-		personData.add(new Person("Данил","Николаев"));
-		personData.add(new Person("Игорь","Пименов"));
+		personData.add(new Person("Paul","Molchanov"));
+		personData.add(new Person("Nikita","Meshkov"));
+		personData.add(new Person("Alex","Positive"));
+		personData.add(new Person("Dimon","Negative"));
+		personData.add(new Person("Sergey","Pavlov"));
 		personData.add(new Person("Анастасия","Реснянская"));
 		personData.add(new Person("Владимир","Ростовцев"));
 		personData.add(new Person("Артур","Сарян"));
@@ -81,11 +82,11 @@ public class MainApp extends Application {
 			AnchorPane personOverview = (AnchorPane) loader.load();
 			
 			// Помещаем сведения об адресатах в центр корневого макета.
-			rootLayout.setCenter(personOverview);
+			rootLayout.setLeft(personOverview);
 			
 			// Даём контроллеру доступ к главному приложению.
-			PersonOverviewController controller = loader.getController();
-			controller.setMainApp(this);
+			PersonOverviewController personController = loader.getController();
+			personController.setMainApp(this);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

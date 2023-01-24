@@ -143,16 +143,7 @@
 	-fx-background-color: #D7D7D7;
 	-fx-text-fill: #fff;
 }
-.menu-bar .label:hover{
-	-fx-background-color: #D7D7D7;
-	-fx-text-fill: #fff;
-}
-.menu-bar .top-bar__menu:hover .label .text{
-	-fx-background-color: #D7D7D7;
-	-fx-text-fill: #fff;
-}
-
-.menu-bar__item.button{
+.menu-bar__item .menu{
 	-fx-padding: 10px 16px;
   -fx-border-radius: 0;
   -fx-background-color: #fff;
@@ -162,9 +153,13 @@
   -fx-effect: null;
   -fx-margin: 0;
 }
-.menu-bar__item.button:hover,
-.menu-bar__item.button:focused{
-	-fx-background-color: d7d7d7;
+.menu:hover,
+.menu:focused{
+	-fx-background-color: #d7d7d7;
+}
+.menu-item:hover,
+.menu-item:focused{
+	-fx-background-color: #d7d7d7;
 }
 .text-field {
 	-fx-font-size: 12px;
@@ -180,7 +175,7 @@
 	-fx-font-size: 12px;
 	-fx-line-height: 20px;
 	-fx-text-fill: #4568ac;
-	-fx-effect: dropshadow(three-pass-box, rgba(30, 30, 30, 0.2), 4, 2, 2, 4);
+	-fx-effect: dropshadow(gaussian, rgba(30, 30, 30, 0.2), 4, 0, 2, 4);
 }
 .button:hover {
 	-fx-background-color: #4568ac;
