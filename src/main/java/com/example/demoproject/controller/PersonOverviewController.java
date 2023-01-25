@@ -62,8 +62,6 @@ public class PersonOverviewController {
 	
 	/**
 	 * Вызывается главным приложением, которое даёт на себя ссылку.
-	 *
-	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;

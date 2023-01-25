@@ -14,17 +14,18 @@
           <Menu mnemonicParsing="false" styleClass="menu-bar__item" text="Файл">
             <items>
               <MenuItem mnemonicParsing="false" text="Открыть" onAction="#openFile"/>
+              <MenuItem mnemonicParsing="false" text="Сохранить" onAction="#saveFile" />
               <MenuItem mnemonicParsing="false" text="Закрыть" onAction="#exitPlatform" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" styleClass="menu-bar__item" text="Изменить">
             <items>
-              <MenuItem mnemonicParsing="false" text="Удалить" />
+              <MenuItem mnemonicParsing="false" text="Удалить" onAction="#clearFile"/>
             </items>
           </Menu>
           <Menu mnemonicParsing="false" styleClass="menu-bar__item" text="Помощь">
             <items>
-              <MenuItem mnemonicParsing="false" text="Инфо" />
+              <MenuItem mnemonicParsing="false" text="Инфо" onAction="#openSite"/>
             </items>
           </Menu>
         </menus>

@@ -3,6 +3,8 @@ import com.example.demoproject.controller.PersonEditDialogController;
 import com.example.demoproject.controller.PersonOverviewController;
 import com.example.demoproject.controller.RootLayoutController;
 import com.example.demoproject.model.Person;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,14 +16,19 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Objects;
 
 public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-
-	private ObservableList<Person> personData = FXCollections.observableArrayList();
+	private final ObservableList<Person> personData = FXCollections.observableArrayList();
 
 	public MainApp() {
 		// В качестве образца добавляем некоторые данные
@@ -37,7 +44,6 @@ public class MainApp extends Application {
 	}
 	/**
 	 * Возвращает данные в виде наблюдаемого списка адресатов.
-	 * @return
 	 */
 	public ObservableList<Person> getPersonData() {
 		return personData;
@@ -46,7 +52,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Список адресатов");
-		this.primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/app-icon.png")));
+		this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/app-icon.png"))));
 		
 		initRootLayout();
 		showPersonOverview();
@@ -60,8 +66,11 @@ public class MainApp extends Application {
 			// Загружаем корневой макет из fxml файла.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
-			rootLayout = (BorderPane) loader.load();
-			
+			rootLayout = loader.load();
+
+			RootLayoutController rootLayoutController = loader.getController();
+			rootLayoutController.setMainApp(this);
+
 			// Отображаем сцену, содержащую корневой макет.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -79,15 +88,15 @@ public class MainApp extends Application {
 			// Загружаем сведения об адресатах.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
-			AnchorPane personOverview = (AnchorPane) loader.load();
+			AnchorPane personOverview = loader.load();
 			
 			// Помещаем сведения об адресатах в центр корневого макета.
-			rootLayout.setLeft(personOverview);
+			rootLayout.setCenter(personOverview);
 			
 			// Даём контроллеру доступ к главному приложению.
 			PersonOverviewController personController = loader.getController();
 			personController.setMainApp(this);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +115,7 @@ public class MainApp extends Application {
 			// для всплывающего диалогового окна.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 			
 			// Создаём диалоговое окно Stage.
 			Stage dialogStage = new Stage();
@@ -131,11 +140,34 @@ public class MainApp extends Application {
 		}
 	}
 	/**
-	 * Возвращает главную сцену.
-	 * @return
+	 * Возвращает главную сцену
 	 */
 	public Stage getPrimaryStage() {
 		return primaryStage;
+	}
+	public void writeJson(){
+		try (Writer writer = Files.newBufferedWriter(Paths
+				.get("src/main/resources/com/example/demoproject/json/temp.json"))){
+
+			Gson gson = new Gson();
+			// convert person data object to JSON file
+			gson.toJson(personData, writer);
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	public void writeJson(String text){
+		try (Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/com/example/demoproject/json/temp.json"))){
+
+			writer.write(text);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void readJson(){
+
 	}
 	
 	public static void main(String[] args) {
