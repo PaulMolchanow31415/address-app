@@ -3,8 +3,11 @@ import com.example.demoproject.controller.PersonEditDialogController;
 import com.example.demoproject.controller.PersonOverviewController;
 import com.example.demoproject.controller.RootLayoutController;
 import com.example.demoproject.model.Person;
+import com.example.demoproject.model.PersonAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,48 +19,53 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
+import static java.lang.System.*;
+
 public class MainApp extends Application {
-	
+	private final Path PERSON_DATA_PATH = Paths.get("src/main/resources/com/example/demoproject/json/temp.json");
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private final ObservableList<Person> personData = FXCollections.observableArrayList();
+	private ObservableList<Person> personData = FXCollections.observableArrayList();
 
 	public MainApp() {
 		// В качестве образца добавляем некоторые данные
-		personData.add(new Person("Paul","Molchanov"));
-		personData.add(new Person("Nikita","Meshkov"));
-		personData.add(new Person("Alex","Positive"));
-		personData.add(new Person("Dimon","Negative"));
-		personData.add(new Person("Sergey","Pavlov"));
-		personData.add(new Person("Анастасия","Реснянская"));
-		personData.add(new Person("Владимир","Ростовцев"));
-		personData.add(new Person("Артур","Сарян"));
-		personData.add(new Person("Вадим","Федоров"));
+		personData.add(new Person("Paul", "Molchanov"));
+		personData.add(new Person("Nikita", "Meshkov"));
+		personData.add(new Person("Alex", "Positive"));
+		personData.add(new Person("Dimon", "Negative"));
+		personData.add(new Person("Sergey", "Pavlov"));
+		personData.add(new Person("Анастасия", "Реснянская"));
+		personData.add(new Person("Владимир", "Ростовцев"));
+		personData.add(new Person("Артур", "Сарян"));
+		personData.add(new Person("Вадим", "Федоров"));
 	}
+
 	/**
 	 * Возвращает данные в виде наблюдаемого списка адресатов.
 	 */
 	public ObservableList<Person> getPersonData() {
 		return personData;
 	}
+
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Список адресатов");
 		this.primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("images/app-icon.png"))));
-		
+
 		initRootLayout();
 		showPersonOverview();
 	}
-	
+
 	/**
 	 * Инициализирует корневой макет.
 	 */
@@ -79,7 +87,7 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Показывает в корневом макете сведения об адресатах.
 	 */
@@ -89,10 +97,10 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/PersonOverview.fxml"));
 			AnchorPane personOverview = loader.load();
-			
+
 			// Помещаем сведения об адресатах в центр корневого макета.
 			rootLayout.setCenter(personOverview);
-			
+
 			// Даём контроллеру доступ к главному приложению.
 			PersonOverviewController personController = loader.getController();
 			personController.setMainApp(this);
@@ -101,6 +109,7 @@ public class MainApp extends Application {
 			e.printStackTrace();
 		}
 	}
+
 	/**
 	 * Открывает диалоговое окно для изменения деталей указанного адресата.
 	 * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
@@ -116,7 +125,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/PersonEditDialog.fxml"));
 			AnchorPane page = loader.load();
-			
+
 			// Создаём диалоговое окно Stage.
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Данные о человеке");
@@ -124,52 +133,71 @@ public class MainApp extends Application {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-			
+
 			// Передаём адресата в контроллер.
 			PersonEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.setPerson(person);
-			
+
 			// Отображаем диалоговое окно и ждём, пока пользователь его не закроет
 			dialogStage.showAndWait();
-			
+
 			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
+
 	/**
 	 * Возвращает главную сцену
 	 */
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-	public void writeJson(){
-		try (Writer writer = Files.newBufferedWriter(Paths
-				.get("src/main/resources/com/example/demoproject/json/temp.json"))){
+	/**
+	 * записывает текущий объект personData в json файл
+	 */
+	public void serializePersons() {
+		try (Writer writer = Files.newBufferedWriter(PERSON_DATA_PATH, StandardCharsets.UTF_8)) {
 
-			Gson gson = new Gson();
-			// convert person data object to JSON file
+			Gson gson = new GsonBuilder()
+					.setPrettyPrinting()
+					.registerTypeAdapter(Person.class, new PersonAdapter())
+					.excludeFieldsWithoutExposeAnnotation()
+					.create();
+
 			gson.toJson(personData, writer);
-
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-	public void writeJson(String text){
-		try (Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/com/example/demoproject/json/temp.json"))){
-
-			writer.write(text);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	public void readJson(){
 
+	public void deserializePersons(File selectedFile) {
+		try (Reader reader = Files.newBufferedReader(selectedFile.toPath(), StandardCharsets.UTF_8)) {
+
+			GsonBuilder builder = new GsonBuilder();
+			builder.registerTypeAdapter(Person.class, new PersonAdapter());
+			Gson gson = builder.create();
+
+			personData.clear();
+			personData.addAll(gson.fromJson(reader, Person.class));
+// C:\Users\USER\Desktop\JAVA_FX\TEST\demoProject\src\main\resources\com\example\demoproject\json\temp.json
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
+
+	public void clearPersons() {
+		try (FileWriter fileWriter = new FileWriter(PERSON_DATA_PATH.toFile(), false)) {
+			fileWriter.write("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}

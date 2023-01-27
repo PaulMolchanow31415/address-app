@@ -25,7 +25,7 @@
           </Menu>
           <Menu mnemonicParsing="false" styleClass="menu-bar__item" text="Помощь">
             <items>
-              <MenuItem mnemonicParsing="false" text="Инфо" onAction="#openSite"/>
+              <MenuItem mnemonicParsing="false" text="Инфо" />
             </items>
           </Menu>
         </menus>

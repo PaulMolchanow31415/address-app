@@ -4,6 +4,7 @@ import com.example.demoproject.MainApp;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.stage.FileChooser;
+
 import java.io.File;
 
 public class RootLayoutController {
@@ -21,24 +22,21 @@ public class RootLayoutController {
 		Platform.exit();
 	}
 	// https://attacomsian.com/blog/gson-read-write-json#convert-list-of-java-objects-to-json-array
+	// TODO: открытие / закрытие файла
 	public void openFile() {
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON файлы (*.json)", "*.json");
-		fileChooser.getExtensionFilters().add(extFilter);
-		File file = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
-		System.out.println(file);
+		fileChooser.setTitle("Выберите файл с данными людей");
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("все файлы json","*.json"));
+
+		File selectedFile = fileChooser.showOpenDialog(mainApp.getPrimaryStage());
+		if (selectedFile != null)
+			mainApp.deserializePersons(selectedFile);
 	}
 	public void saveFile() {
-		mainApp.writeJson();
+		mainApp.serializePersons();
 	}
 	public void clearFile() {
-		mainApp.writeJson("");
-	}
-	public void openSite() {
-		try {
-			new ProcessBuilder("x-www-browser", "https://stackoverflow.com").start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		mainApp.clearPersons();
 	}
 }
