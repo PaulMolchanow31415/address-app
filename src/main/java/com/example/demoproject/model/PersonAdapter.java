@@ -16,11 +16,6 @@ public class PersonAdapter extends TypeAdapter<Person> {
     public Person read(JsonReader reader) throws IOException {
         Person person = new Person();
 
-        if (reader.peek() == JsonToken.BEGIN_ARRAY
-                || reader.peek() == JsonToken.END_ARRAY)
-            reader.skipValue();
-        if (reader.peek() == JsonToken.END_DOCUMENT) return null;
-
         reader.beginObject();
         if ("firstName".equals(reader.nextName())) person.setFirstName(reader.nextString());
         if ("lastName".equals(reader.nextName())) person.setLastName(reader.nextString());

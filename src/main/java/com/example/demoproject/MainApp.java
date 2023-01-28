@@ -6,6 +6,8 @@ import com.example.demoproject.model.Person;
 import com.example.demoproject.model.PersonAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import javafx.application.Application;
@@ -13,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -182,11 +185,20 @@ public class MainApp extends Application {
 			Gson gson = builder.create();
 
 			personData.clear();
-			personData.addAll(gson.fromJson(reader, Person.class));
-// C:\Users\USER\Desktop\JAVA_FX\TEST\demoProject\src\main\resources\com\example\demoproject\json\temp.json
 
+			JsonArray jsonElements = gson.fromJson(reader, JsonArray.class);
+
+			for (JsonElement element : jsonElements){
+				Person person = gson.fromJson(element, Person.class);
+				personData.add(person);
+			}
+// C:\Users\USER\Desktop\JAVA_FX\TEST\demoProject\src\main\resources\com\example\demoproject\json\temp.json
 		} catch (Exception e) {
-			e.printStackTrace();
+			Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+			errorAlert.setTitle("Неправильный формат записи данных");
+			errorAlert.setHeaderText("Выберите другой файл json");
+			errorAlert.setContentText("Из-за неправильного формата файла у вас возникла ошибка");
+			errorAlert.showAndWait();
 		}
 	}
 
