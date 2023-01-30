@@ -7,4 +7,5 @@ module com.example.demoproject {
 	exports com.example.demoproject;
 	exports com.example.demoproject.controller;
 	opens com.example.demoproject.controller to javafx.fxml;
+	opens com.example.demoproject.model;
 }

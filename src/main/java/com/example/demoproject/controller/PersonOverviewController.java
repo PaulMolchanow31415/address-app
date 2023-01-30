@@ -10,6 +10,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PersonOverviewController {
 	@FXML
@@ -46,14 +47,14 @@ public class PersonOverviewController {
 	@FXML
 	private void initialize() {
 		// Инициализация таблицы адресатов с двумя столбцами.
-		firstNameColumn.setCellValueFactory(
-				cellData -> cellData.getValue().firstNameProperty());
-		lastNameColumn.setCellValueFactory(
-				cellData -> cellData.getValue().lastNameProperty());
-		
+		firstNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("firstName"));
+		lastNameColumn.setCellValueFactory(new PropertyValueFactory<Person, String>("lastName"));
+
 		// Очистка дополнительной информации об адресате.
 		showPersonDetails(null);
-		
+
+//		personTable.setItems(mainApp.getPersonData());
+
 		// Слушаем изменения выбора, и при изменении отображаем
 		// дополнительную информацию об адресате.
 		personTable.getSelectionModel().selectedItemProperty().addListener(

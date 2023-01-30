@@ -8,20 +8,19 @@ import java.time.LocalDate;
 
 public class Person {
 	@Expose
-	private final StringProperty firstName;
+	private String firstName;
 	@Expose
-	private final StringProperty lastName;
+	private String lastName;
 	@Expose
-	private final StringProperty street;
+	private String street;
 	@Expose
-	private final IntegerProperty postalCode;
+	private Integer postalCode;
 	@Expose
-	private final StringProperty city;
+	private String city;
 	@Expose
-	private final ObjectProperty<LocalDate> birthday;
-	/**
-	 * Конструктор без параметров.
-	 */
+//	private final ObjectProperty<LocalDate> birthday;
+	private LocalDate birthday;
+
 	public Person() {
 		this(null, null);
 	}
@@ -32,17 +31,17 @@ public class Person {
 	 * @param lastName
 	 */
 	public Person(String firstName, String lastName) {
-		this.firstName = new SimpleStringProperty(firstName);
-		this.lastName = new SimpleStringProperty(lastName);
+		this.firstName = firstName;
+		this.lastName = lastName;
 		
 		// Какие-то фиктивные начальные данные для удобства тестирования.
-		this.street = new SimpleStringProperty("какая-то улица");
-		this.postalCode = new SimpleIntegerProperty(1234);
-		this.city = new SimpleStringProperty("какой-то город");
-		this.birthday = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+		this.street = "какая-то улица";
+		this.postalCode = 1234;
+		this.city = "какой-то город";
+		this.birthday = LocalDate.of(1999, 2, 21);
 	}
 
-	public Person(StringProperty firstName, StringProperty lastName, StringProperty street, IntegerProperty postalCode, StringProperty city, ObjectProperty<LocalDate> birthday) {
+	public Person(String firstName, String lastName, String street, Integer postalCode, String city, LocalDate birthday) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.street = street;
@@ -52,74 +51,50 @@ public class Person {
 	}
 
 	public String getFirstName() {
-		return firstName.get();
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName.set(firstName);
-	}
-
-	public StringProperty firstNameProperty() {
 		return firstName;
 	}
 
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	public String getLastName() {
-		return lastName.get();
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName.set(lastName);
-	}
-
-	public StringProperty lastNameProperty() {
 		return lastName;
 	}
 
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	public String getStreet() {
-		return street.get();
-	}
-
-	public void setStreet(String street) {
-		this.street.set(street);
-	}
-
-	public StringProperty streetProperty() {
 		return street;
 	}
 
-	public int getPostalCode() {
-		return postalCode.get();
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
-	public void setPostalCode(int postalCode) {
-		this.postalCode.set(postalCode);
-	}
-
-	public IntegerProperty postalCodeProperty() {
+	public Integer getPostalCode() {
 		return postalCode;
 	}
 
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+
 	public String getCity() {
-		return city.get();
-	}
-
-	public void setCity(String city) {
-		this.city.set(city);
-	}
-
-	public StringProperty cityProperty() {
 		return city;
 	}
 
+	public void setCity(String city) {
+		this.city = city;
+	}
+
 	public LocalDate getBirthday() {
-		return birthday.get();
+		return birthday;
 	}
 
 	public void setBirthday(LocalDate birthday) {
-		this.birthday.set(birthday);
-	}
-
-	public ObjectProperty<LocalDate> birthdayProperty() {
-		return birthday;
+		this.birthday = birthday;
 	}
 }

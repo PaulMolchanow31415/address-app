@@ -1,4 +1,5 @@
 package com.example.demoproject;
+
 import com.example.demoproject.controller.PersonEditDialogController;
 import com.example.demoproject.controller.PersonOverviewController;
 import com.example.demoproject.controller.RootLayoutController;
@@ -8,8 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,23 +20,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Objects;
 
-import static java.lang.System.*;
-
 public class MainApp extends Application {
+
 	private final Path PERSON_DATA_PATH = Paths.get("src/main/resources/com/example/demoproject/json/temp.json");
+
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	private ObservableList<Person> personData = FXCollections.observableArrayList();
+	private final ObservableList<Person> personData = FXCollections.observableArrayList();
 
 	public MainApp() {
 		// В качестве образца добавляем некоторые данные
@@ -52,9 +48,6 @@ public class MainApp extends Application {
 		personData.add(new Person("Вадим", "Федоров"));
 	}
 
-	/**
-	 * Возвращает данные в виде наблюдаемого списка адресатов.
-	 */
 	public ObservableList<Person> getPersonData() {
 		return personData;
 	}
@@ -69,9 +62,6 @@ public class MainApp extends Application {
 		showPersonOverview();
 	}
 
-	/**
-	 * Инициализирует корневой макет.
-	 */
 	public void initRootLayout() {
 		try {
 			// Загружаем корневой макет из fxml файла.
@@ -118,7 +108,7 @@ public class MainApp extends Application {
 	 * Если пользователь кликнул OK, то изменения сохраняются в предоставленном
 	 * объекте адресата и возвращается значение true.
 	 *
-	 * @param person - объект адресата, который надо изменить
+	 * @param person объект адресата, который надо изменить
 	 * @return true, если пользователь кликнул OK, в противном случае false.
 	 */
 	public boolean showPersonEditDialog(Person person) {
@@ -204,6 +194,7 @@ public class MainApp extends Application {
 
 	public void clearPersons() {
 		try (FileWriter fileWriter = new FileWriter(PERSON_DATA_PATH.toFile(), false)) {
+			personData.clear();
 			fileWriter.write("");
 		} catch (Exception e) {
 			e.printStackTrace();
