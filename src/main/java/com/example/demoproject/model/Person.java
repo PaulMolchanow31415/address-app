@@ -18,7 +18,6 @@ public class Person {
 	@Expose
 	private String city;
 	@Expose
-//	private final ObjectProperty<LocalDate> birthday;
 	private LocalDate birthday;
 
 	public Person() {

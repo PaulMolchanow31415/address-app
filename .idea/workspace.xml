@@ -10,29 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f59ba90e-f92b-4e16-bbc7-2a87b58905d5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demoproject/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demoproject/MainApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demoproject/controller/PersonOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demoproject/controller/PersonOverviewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/demoproject/model/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/demoproject/model/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/MainApp.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/controller/PersonEditDialogController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/controller/PersonOverviewController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/controller/RootLayoutController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/css/BlueTheme.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/app-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/change-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/file-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/help-icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/result-app.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/images/result-modality.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/model/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/util/DateUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/view/PersonEditDialog.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/view/PersonOverview.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demoproject/view/RootLayout.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +121,7 @@
       <workItem from="1674748122085" duration="5592000" />
       <workItem from="1674793821977" duration="23701000" />
       <workItem from="1674882137037" duration="5840000" />
-      <workItem from="1675080367309" duration="3071000" />
+      <workItem from="1675080367309" duration="4367000" />
     </task>
     <servers />
   </component>
